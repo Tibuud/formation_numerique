@@ -1,5 +1,5 @@
 <p>Effectuer une recherche sur notre </p>
-<form action="{{url('search')}}" method="POST" role="search">
+<form action="{{url('search')}}" method="GET" role="search">
     {{ csrf_field() }}
     <div class="input-group">
         <input type="text" class="form-control" name="query"
