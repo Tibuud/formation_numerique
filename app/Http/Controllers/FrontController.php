@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Contact;
 
 class FrontController extends Controller
 {
@@ -52,5 +54,18 @@ class FrontController extends Controller
 
 
         return view('front.searchResult', ['posts' => $posts]);
+    }
+
+    public function contact()
+    {
+        return view('front.contact');
+    }
+
+    public function sendEmail(Request $request)
+    {
+        Mail::to('MyUsername@gmail.com')
+          ->send(new Contact($request->except('_token')));
+
+        return back()->with('mon_message', 'Votre message a bien été envoyé.');
     }
 }

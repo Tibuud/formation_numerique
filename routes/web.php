@@ -18,3 +18,7 @@ Route::get('post/{id}', 'FrontController@show')->where(['id' => '[0-9]+']);
 Route::get('showType/{type}', 'FrontController@showType');
 
 Route::get('search', 'FrontController@search');
+
+Route::get('contact', 'FrontController@contact');
+
+Route::post('sendEmail', 'FrontController@sendEmail');

@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav">
         <li><a href="{{url("showType", "stage")}}">Stages</a></li>
         <li><a href="{{url("showType", "formation")}}">Formations</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="{{url('contact')}}">Contact</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
