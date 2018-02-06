@@ -34,8 +34,23 @@ class FrontController extends Controller
 
     public function showType(string $type)
     {
-        $posts = Post::where("post_type", $type)->orderBy('date_start', "asc")->paginate(2);
+        $posts = Post::where("post_type", $type)
+                      ->orderBy('date_start', "asc")
+                      ->paginate(2);
 
         return view('front.showType', ['posts' => $posts, 'type' => $type]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('query');
+
+        $posts = Post::where('title', 'like', "%" . $query . "%")
+                      ->orwhere('description', 'like', "%" . $query . "%")
+                      ->orwhere('post_type', 'like', "%" . $query . "%")
+                      ->paginate(5);
+
+
+        return view('front.searchResult', ['posts' => $posts]);
     }
 }

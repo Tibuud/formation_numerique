@@ -23,7 +23,7 @@
             @yield('content')
           </div>
           <div class="col-sm-4">
-            Recherche
+            @include('partials.search')
           </div>
         </div>
 			</div>
