@@ -45,6 +45,10 @@ class FrontController extends Controller
 
     public function search(Request $request)
     {
+        $this->validate($request, [
+             'query' => "required",
+        ]);
+
         $query = $request->get('query');
 
         $posts = Post::where('title', 'like', "%" . $query . "%")
@@ -63,6 +67,11 @@ class FrontController extends Controller
 
     public function sendEmail(Request $request)
     {
+        $this->validate($request, [
+           'email' => "required|email",
+           'message' =>"required"
+         ]);
+
         Mail::to('MyUsername@gmail.com')
           ->send(new Contact($request->except('_token')));
 

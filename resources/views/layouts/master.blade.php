@@ -13,7 +13,7 @@
           <h1 class="col-md-offset-7 col-md-5 pull-right">Formations/Stages</h1>
       </div>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					@include('partials.menu')
 				</div>
 			</div>
@@ -28,7 +28,7 @@
         </div>
 			</div>
       <div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-12">
 					@include('partials.menu')
 				</div>
 			</div>

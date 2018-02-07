@@ -1,4 +1,4 @@
-<p>Effectuer une recherche sur notre </p>
+<p>Effectuer une recherche sur notre site</p>
 <form action="{{url('search')}}" method="GET" role="search">
     {{ csrf_field() }}
     <div class="input-group">

@@ -22,3 +22,9 @@ Route::get('search', 'FrontController@search');
 Route::get('contact', 'FrontController@contact');
 
 Route::post('sendEmail', 'FrontController@sendEmail');
+
+Route::resource('admin/post', 'PostController')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
