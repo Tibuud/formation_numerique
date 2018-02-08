@@ -10,7 +10,7 @@
         </ul>
     </div>
 @endif
-<form class="form-group" action="{{route("post.store")}}" method="post">
+<form class="form-group" action="{{route("post.store")}}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="col-lg-6">
   	<div class="form-group">
@@ -66,10 +66,10 @@
   			<label><input type="radio" name="status" value='unpublished' @if(old('status')=='unpublished') checked @endif>dépublier</label>
   		</div>
   	</div>
-  	{{-- <div class="form-group">
+  	<div class="form-group">
   		<label for="picture">Ajouter un fichier</label>
   		<input type="file" name="picture" value="{{old('picture')}}" id="picture">
-  	</div> --}}
+  	</div>
   	<button type="submit" class="btn btn-primary btn-lg">Ajouter ce post</button>
   </div>
 </form>

@@ -45,6 +45,18 @@ class PostController extends Controller
     {
         $post = Post::create($request->all());
 
+        $im = $request->file('picture');
+
+        if (!empty($im)) {
+        }
+
+        $link = $request->file('picture')->store('/');
+
+        $post->picture()->create([
+          'link' => $link,
+          'title' => $request->title_image?? $request->title
+        ]);
+
         return redirect()->route('post.index')->with('message', 'Votre nouveau post à bien été enregistré.');
     }
 

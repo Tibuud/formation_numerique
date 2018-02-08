@@ -6,7 +6,9 @@
 <div class="row">
   <div class="col-md-5">
     <div class="row">
-      <img src="{{asset('images/'. $post->picture->link)}}" width="250" alt="">
+      @if(isset($post->picture))
+      <img src="{{asset('images/'.$post->picture->link)}}" width="250" alt="">
+      @endif
     </div>
 
         <p>Début : {{$post->date_start}}</p>

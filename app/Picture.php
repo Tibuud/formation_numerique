@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Picture extends Model
 {
-  public function book(){
-    return $this->belongsTo(Book::class);
-  }
+    protected $fillable = [
+    'link', 'title'
+  ];
+  
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }
