@@ -13,11 +13,11 @@
 
 Route::get('/', 'FrontController@index');
 
-Route::get('post/{id}', 'FrontController@show')->where(['id' => '[0-9]+']);
+Route::get('post/{id}', 'FrontController@show')->where(['id' => '[0-9]+'])->name('post');
 
 Route::get('showType/{type}', 'FrontController@showType');
 
-Route::get('search', 'FrontController@search');
+Route::any('search', 'FrontController@search')->name('search');
 
 Route::get('contact', 'FrontController@contact');
 

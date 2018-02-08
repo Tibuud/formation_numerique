@@ -2,8 +2,9 @@
 
 @section('content')
 
-<h2>Résultat de votre recherche</h2>
-{{$posts->links()}}
+<h2>Résultat de votre recherche pour "{{$q}}"</h2>
+@if(isset($posts))
+{{$posts->appends(request()->only('q'))->links()}}
 <ul>
 @forelse($posts as $post)
   <li>
@@ -25,5 +26,6 @@
   </li>
 @endforelse
 </ul>
-{{$posts->links()}}
+{{$posts->appends(request()->only('q'))->links()}}
+@endif
 @endsection

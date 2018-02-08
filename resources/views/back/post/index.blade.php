@@ -3,7 +3,16 @@
 @section('content')
 
 <h2>Toutes les formations et toutes les stages</h2>
-{{$posts->links()}}
+@if(Session::has('message'))
+<div class="alert">
+  <p>{{Session::get('message')}}</p>
+</div>
+@endif
+<button type="button" class="btn btn-primary btn-lg"><a style='text-decoration:none; color:white' href="{{route('post.create')}}">Ajouter un post</a></button>
+<div class="">
+  {{$posts->links()}}
+</div>
+
 <table class="table table-bordered table-striped table-responsive">
     <thead>
       <tr>
@@ -25,7 +34,11 @@
       <tr>
         <td>{{$post->title}}</td>
         <td>{{$post->post_type}}</td>
+      @if(isset($post->category))
         <td>{{$post->category->name}}</td>
+      @else
+        <td>Aucune catégorie</td>
+      @endif
         <td>{{$post->price}}€</td>
         <td>{{$post->maw_students}}</td>
         <td>{{$post->date_start}}</td>

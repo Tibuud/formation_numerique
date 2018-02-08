@@ -46,18 +46,18 @@ class FrontController extends Controller
     public function search(Request $request)
     {
         $this->validate($request, [
-             'query' => "required",
-        ]);
+               'q' => "required",
+          ]);
 
-        $query = $request->get('query');
+        $q = $request->q;
 
-        $posts = Post::where('title', 'like', "%" . $query . "%")
-                      ->orwhere('description', 'like', "%" . $query . "%")
-                      ->orwhere('post_type', 'like', "%" . $query . "%")
-                      ->paginate(5);
+        $posts = Post::where('title', 'like', "%" . $q . "%")
+                        ->orwhere('description', 'like', "%" . $q . "%")
+                        ->orwhere('post_type', 'like', "%" . $q . "%")
+                        ->paginate(5);
 
-
-        return view('front.searchResult', ['posts' => $posts]);
+        // return view('front.searchResult', ['posts' => $posts, 'q' => $query]);
+        return view('front.searchResult', compact('posts', 'q'));
     }
 
     public function contact()

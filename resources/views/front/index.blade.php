@@ -7,14 +7,18 @@
 <ul>
 @forelse($posts as $post)
   <li>
-    <h3><a href="{{url('post', $post->id)}}">{{$post->title}}</a></h3>
+    <h3><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h3>
       <div class="row">
         <div class="col-md-4">
+          @if(isset($post->picture))
           <img src="{{asset('images/'.$post->picture->link)}}" width="180" alt="">
+          @endif
         </div>
         <div class="col-md-8">
           <p>Type : {{$post->post_type}}</p>
+          @if(isset($post->category))
           <p>Catégorie : {{$post->category->name}}</p>
+          @endif  
           <p>Début : {{$post->date_start}}</p>
         </div>
       </div>

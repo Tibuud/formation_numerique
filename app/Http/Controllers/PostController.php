@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -18,7 +20,7 @@ class PostController extends Controller
 
         return view('back.post.index', ['posts' => $posts]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,8 +29,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::pluck('name', 'id')->all();
+
+        return view('back.post.create', ['categories' => $categories]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,9 +41,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        $post = Post::create($request->all());
+
+        return redirect()->route('post.index')->with('message', 'Votre nouveau post à bien été enregistré.');
     }
 
     /**
@@ -49,7 +56,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+        return view('back.post.show', ['post' => $post]);
     }
 
     /**
