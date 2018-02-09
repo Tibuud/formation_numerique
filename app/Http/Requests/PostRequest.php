@@ -24,16 +24,16 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts,title|max:255',
+            'title' => 'required|max:255',
             'description' => 'required',
             'post_type' => 'required|in:formation,stage',
             'price' => "required|regex:/^\d*(\.\d{2})?$/",
             'student_max' => 'required|integer|max:50',
             'category_id' => 'integer',
             'date_start' => 'required|date',
-            'date_end' => 'required|date',
+            'date_end' => 'required|date|after:date_start',
             'status' => 'required|in:published,unpublished',
-            'picture' => 'image|mimes:jpg,png'
+            'picture' => 'image|mimes:jpg,jpeg,png'
         ];
     }
 }

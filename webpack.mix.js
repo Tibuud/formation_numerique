@@ -11,8 +11,22 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .browserSync({
-      proxy: 'localhost:8000'
-   });
+ mix.js('resources/assets/js/app.js', 'public/js')
+    .js('resources/assets/js/confirm.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .browserSync({
+        // pour faire fonctionner debug bar + npm run watch
+        proxy: {
+            target: 'localhost:8000',
+            reqHeaders: function() {
+                return {
+                    host: 'localhost:3000'
+                };
+            }
+          },
+        files:[
+          'app/**/*.php',
+          'public/assets/js/**/*.php',
+          'public/assets/css/**/*/css'
+        ]
+    });

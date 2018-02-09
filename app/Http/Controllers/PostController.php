@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
 use App\Http\Requests\PostRequest;
+use Storage;
 
 class PostController extends Controller
 {
@@ -47,9 +48,6 @@ class PostController extends Controller
 
         $im = $request->file('picture');
 
-        if (!empty($im)) {
-        }
-
         $link = $request->file('picture')->store('/');
 
         $post->picture()->create([
@@ -81,7 +79,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        $categories = Category::pluck('name', 'id')->all();
+
+        return view('back.post.edit', ['post' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -91,9 +92,33 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        // Il faut repérer le post que l'on souhaite modifier
+        $post = Post::find($id);
+
+        $post->update($request->all()); //mettre à jour les données d'un  post_type
+
+        $image = $request->file('picture');
+
+        if (!empty($image)) {
+            //faire quelque chose si $image existe
+            if (count($post->picture) > 0) {
+                Storage::disk('local')->delete($post->picture->link); //Supprime physiquement l'image
+                $post->picture()->delete(); // supprimer l'information en base de donnée
+            }
+
+            // méthode store retourne un link hash sécurisé
+            $link = $request->file('picture')->store('./');
+
+            //mettre à jour la table picture pour le lien vers l'image dans la base de données
+            $post->picture()->create([
+                'link' => $link,
+                'title' => $request->title_image ?? $request->title
+            ]);
+        }
+
+        return redirect()->route('post.index')->with('message', 'Success');
     }
 
     /**
@@ -104,6 +129,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        return redirect()->route('post.index')->with('message', 'Votre post a bien été supprimé.');
     }
 }

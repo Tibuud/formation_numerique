@@ -22,21 +22,21 @@ class FrontController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('date_start', "asc")->paginate(2);
+        $posts = Post::published()->orderBy('date_start', "asc")->take(2)->get();
 
         return view('front.index', ['posts' => $posts]);
     }
 
     public function show(int $id)
     {
-        $post = Post::find($id);
+        $post = Post::published()->find($id);
 
         return view('front.show', ['post' => $post]);
     }
 
     public function showType(string $type)
     {
-        $posts = Post::where("post_type", $type)
+        $posts = Post::published()->where("post_type", $type)
                       ->orderBy('date_start', "asc")
                       ->paginate(2);
 
@@ -54,6 +54,7 @@ class FrontController extends Controller
         $posts = Post::where('title', 'like', "%" . $q . "%")
                         ->orwhere('description', 'like', "%" . $q . "%")
                         ->orwhere('post_type', 'like', "%" . $q . "%")
+                        ->published()
                         ->paginate(5);
 
         // return view('front.searchResult', ['posts' => $posts, 'q' => $query]);

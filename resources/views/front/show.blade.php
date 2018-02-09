@@ -11,8 +11,8 @@
       @endif
     </div>
 
-        <p>Début : {{$post->date_start}}</p>
-        <p>Fin : {{$post->date_start}}</p>
+        <p>Début : {{$post->date_start_fr}}</p>
+        <p>Fin : {{$post->date_start_fr}}</p>
         <p>Prix : {{$post->price}}€</p>
         <p>Nombre d'élève maxi : {{$post->student_max}}</p>
 

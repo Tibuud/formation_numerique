@@ -20,8 +20,8 @@
   	<div class="form-group">
   		<label for="post_type">Type de post</label>
   		<select class="form-control" id='post_type' name='post_type'>
-  			<option value="formation">Formation</option>
-  			<option value="stage">Stage</option>
+  			<option value="formation" @if(old('post_type') == 'formation') selected @endif>Formation</option>
+  			<option value="stage" @if(old('post_type') == 'stage') selected @endif>Stage</option>
   		</select>
   	</div>
   	<div class="form-group">

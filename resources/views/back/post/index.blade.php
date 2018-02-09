@@ -3,11 +3,7 @@
 @section('content')
 
 <h2>Toutes les formations et toutes les stages</h2>
-@if(Session::has('message'))
-<div class="alert">
-  <p>{{Session::get('message')}}</p>
-</div>
-@endif
+@include('back.post.partials.flash')
 <button type="button" class="btn btn-primary btn-lg"><a style='text-decoration:none; color:white' href="{{route('post.create')}}">Ajouter un post</a></button>
 <div class="">
   {{$posts->links()}}
@@ -40,7 +36,7 @@
         <td>Aucune catégorie</td>
       @endif
         <td>{{$post->price}}€</td>
-        <td>{{$post->maw_students}}</td>
+        <td>{{$post->student_max}}</td>
         <td>{{$post->date_start}}</td>
         <td>{{$post->date_end}}</td>
         <td>{{$post->status}}</td>
@@ -63,4 +59,8 @@
   </tbody>
 </table>
 {{$posts->links()}}
+@endsection
+@section('scripts')
+    @parent
+    <script src="{{asset('js/confirm.js')}}"></script>
 @endsection

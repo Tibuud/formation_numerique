@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -27,5 +28,22 @@ class Post extends Model
         } else {
             $this->attributes['category_id'] = $value;
         }
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    public function getDateStartFrAttribute()
+    {
+        $date_start = Carbon::parse($this->date_start);
+        return $date_start->format('d-m-Y');
+    }
+
+    public function getDateEndFrAttribute()
+    {
+        $date_End = Carbon::parse($this->date_End);
+        return $date_End->format('d-m-Y');
     }
 }

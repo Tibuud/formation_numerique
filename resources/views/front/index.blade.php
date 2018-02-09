@@ -3,10 +3,10 @@
 @section('content')
 
 <h2>Toutes les formations et toutes les stages</h2>
-{{$posts->links()}}
-<ul>
+
+<ul class='list-group'>
 @forelse($posts as $post)
-  <li>
+  <li class='list-group-item'>
     <h3><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h3>
       <div class="row">
         <div class="col-md-4">
@@ -18,8 +18,8 @@
           <p>Type : {{$post->post_type}}</p>
           @if(isset($post->category))
           <p>Catégorie : {{$post->category->name}}</p>
-          @endif  
-          <p>Début : {{$post->date_start}}</p>
+          @endif
+          <p>Début : {{$post->date_start_fr}}</p>
         </div>
       </div>
   </li>
@@ -29,5 +29,5 @@
   </li>
 @endforelse
 </ul>
-{{$posts->links()}}
+
 @endsection

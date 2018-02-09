@@ -23,7 +23,9 @@
             @yield('content')
           </div>
           <div class="col-sm-4">
-            @include('partials.search')
+						   @guest
+								 @include('partials.search')
+					     @endguest
           </div>
         </div>
 			</div>
@@ -33,6 +35,8 @@
 				</div>
 			</div>
 		</div>
+	@section('scripts')
 		<script src="{{asset('js/app.js')}}"></script>
+	@show
 	</body>
 </html>
