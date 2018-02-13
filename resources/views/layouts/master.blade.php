@@ -26,6 +26,9 @@
 						   @guest
 								 @include('partials.search')
 					     @endguest
+							 @auth
+								 @include('back.post.partials.search')
+							 @endauth
           </div>
         </div>
 			</div>

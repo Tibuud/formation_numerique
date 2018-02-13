@@ -7,7 +7,7 @@
 <ul class='list-group'>
 @forelse($posts as $post)
   <li class='list-group-item'>
-    <h3><a href="{{route('post', $post->id)}}">{{$post->title}}</a></h3>
+    <h3><a href="{{route('post',[ $post->id, $post->slug])}}">{{$post->title}}</a></h3>
       <div class="row">
         <div class="col-md-4">
           @if(isset($post->picture))
@@ -18,6 +18,8 @@
           <p>Type : {{$post->post_type}}</p>
           @if(isset($post->category))
           <p>Catégorie : {{$post->category->name}}</p>
+          @else
+          <p>Catégorie : Auncune</p>
           @endif
           <p>Début : {{$post->date_start_fr}}</p>
         </div>

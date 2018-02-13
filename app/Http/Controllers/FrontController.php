@@ -7,6 +7,7 @@ use App\Post;
 use App\Category;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Contact;
+use Cache;
 
 class FrontController extends Controller
 {
@@ -22,21 +23,26 @@ class FrontController extends Controller
 
     public function index()
     {
-        $posts = Post::published()->orderBy('date_start', "asc")->take(2)->get();
+        $prefix = request()->page?? 'home';
+        $path = 'book' . $prefix;
+
+        $posts = Cache::remember($path, 60*24, function () {
+            return Post::published()->with('picture', 'category')->orderBy('date_start', "asc")->take(2)->get();
+        });
 
         return view('front.index', ['posts' => $posts]);
     }
 
     public function show(int $id)
     {
-        $post = Post::published()->find($id);
+        $post = Post::published()->with('picture', 'category')->find($id);
 
         return view('front.show', ['post' => $post]);
     }
 
     public function showType(string $type)
     {
-        $posts = Post::published()->where("post_type", $type)
+        $posts = Post::published()->with('picture', 'category')->where("post_type", $type)
                       ->orderBy('date_start', "asc")
                       ->paginate(2);
 
@@ -51,11 +57,9 @@ class FrontController extends Controller
 
         $q = $request->q;
 
-        $posts = Post::where('title', 'like', "%" . $q . "%")
-                        ->orwhere('description', 'like', "%" . $q . "%")
-                        ->orwhere('post_type', 'like', "%" . $q . "%")
-                        ->published()
-                        ->paginate(5);
+        $posts = Post::research($q)
+                      ->published()
+                      ->paginate(5);
 
         // return view('front.searchResult', ['posts' => $posts, 'q' => $query]);
         return view('front.searchResult', compact('posts', 'q'));

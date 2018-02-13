@@ -15,7 +15,11 @@
         </div>
         <div class="col-md-8">
           <p>Type : {{$post->post_type}}</p>
+          @if(isset($post->category))
           <p>Catégorie : {{$post->category->name}}</p>
+          @else
+          <p>Catégorie : Auncune</p>
+          @endif
           <p>Début : {{$post->date_start}}</p>
         </div>
       </div>

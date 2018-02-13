@@ -3,6 +3,7 @@
 @section('content')
 
 <h2>Toutes les formations et toutes les stages</h2>
+@include('back.post.partials.error')
 @include('back.post.partials.flash')
 <button type="button" class="btn btn-primary btn-lg"><a style='text-decoration:none; color:white' href="{{route('post.create')}}">Ajouter un post</a></button>
 <div class="">
@@ -26,6 +27,9 @@
       </tr>
     </thead>
     <tbody>
+      <form action="{{route('multi_delete')}}" method="post" class='delete'>
+        {{ csrf_field() }}
+        {{ method_field('DELETE') }}
 @forelse($posts as $post)
       <tr>
         <td>{{$post->title}}</td>
@@ -43,11 +47,7 @@
         <td><a href="{{route('post.show', $post->id)}}">voir</a></td>
         <td><a href="{{route('post.edit', $post->id)}}">éditer</a></td>
         <td>
-            <form action="{{ route('post.destroy', $post->id) }}" method="post" class='delete'>
-              {{ method_field('DELETE') }}
-              {{ csrf_field() }}
-              <button type="submit" >delete</button>
-            </form>
+          <input type="checkbox" name="multi_delete[]" value="{{$post->id}}">
         </td>
       </tr>
     @empty
@@ -59,6 +59,12 @@
   </tbody>
 </table>
 {{$posts->links()}}
+<div class="row">
+  <div class="col-md-offset-9 col-md-3">
+    <button type="submit" class="btn btn-primary btn-lg">Valider la suppression multiple</button>
+  </div>
+</div>
+</form>
 @endsection
 @section('scripts')
     @parent

@@ -1,15 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+@include('back.post.partials.error')
 <form class="form-group" action="{{route("post.store")}}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
   <div class="col-lg-6">
@@ -31,7 +23,7 @@
   	<div class="form-group">
   		<label for="category_id">Catégorie</label>
   		<select class="form-control" name="category_id" id='category_id'>
-        <option value="0">aucune</option>
+        <option value="1000">aucune</option>
   			@forelse($categories as $id => $name)
   			<option value="{{$id}}" @if(old('category_id') == $id) selected @endif>{{$name}}</option>
   			@empty

@@ -1,15 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+@include('back.post.partials.error')
 <form class="form-group" action="{{route('post.update', $post->id)}}" method="post" enctype="multipart/form-data">
   {{ csrf_field() }}
   {{ method_field('PATCH') }}
@@ -32,17 +24,34 @@
   	<div class="form-group">
   		<label for="category_id">Catégorie</label>
   		<select class="form-control" name="category_id" id='category_id'>
-        <option value="0">aucune</option>
-        @if(isset($post->category->id))
-          @forelse($categories as $id => $name)
-    			<option value="{{$id}}" @if((old('category_id') == $id) || ($post->category->id == $id)) selected @endif>{{$name}}</option>
-    			@empty
-    			@endforelse
+        @if(empty(old('category_id')))
+          @if(empty($post->category->id))
+            <option value="1000" selected>Aucun catégorie</option>
+            @forelse($categories as $id => $name)
+      			<option value="{{$id}}">{{$name}}</option>
+      			@empty
+      			@endforelse
+          @else
+            <option value="1000">Aucun catégorie</option>
+            @forelse($categories as $id => $name)
+            <option value="{{$id}}" @if($post->category->id == $id) selected @endif>{{$name}}</option>
+            @empty
+            @endforelse
+          @endif
         @else
-    			@forelse($categories as $id => $name)
-    			<option value="{{$id}}" @if(old('category_id') == $id) selected @endif>{{$name}}</option>
-    			@empty
-    			@endforelse
+          @if(old('category_id') == 1000)
+            <option value="1000" selected>Aucun catégorie</option>
+            @forelse($categories as $id => $name)
+            <option value="{{$id}}">{{$name}}</option>
+            @empty
+            @endforelse
+          @else
+            <option value="0">Aucun catégorie</option>
+            @forelse($categories as $id => $name)
+            <option value="{{$id}}" @if(old('category_id') == $id) selected @endif>{{$name}}</option>
+            @empty
+            @endforelse
+          @endif
         @endif
   		</select>
   	</div>
@@ -58,11 +67,11 @@
   	</div>
   	<div class="form-group">
   		<label for="date_start">Début de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_start' id='date_start' @if (!empty(old('date_start'))) value='{{old('date_start')}}' @else value='{{substr($post->date_start,0,10) . "T" . substr($post->date_start,11,5)}}' @endif>
+  		<input type="datetime-local" class="form-control" name='date_start' id='date_start' @if (!empty(old('date_start'))) value='{{old('date_start')}}' @else value='{{$post->date_start_for_input}}' @endif>
   	</div>
   	<div class="form-group">
   		<label for="date_end">Fin de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_end' id='date_end' @if (!empty(old('date_end'))) value='{{old('date_end')}}' @else value='{{substr($post->date_end,0,10) . "T" . substr($post->date_end,11,5)}}' @endif>
+  		<input type="datetime-local" class="form-control" name='date_end' id='date_end' @if (!empty(old('date_end'))) value='{{old('date_end')}}' @else value='{{$post->date_end_for_input}}' @endif>
   	</div>
   	<div class="form-group">
   		<label for='status'>Publier le post</label>

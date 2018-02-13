@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('date_start', "asc")->paginate(7);
+        $posts = Post::with('category')->orderBy('date_start', "asc")->paginate(7);
 
         return view('back.post.index', ['posts' => $posts]);
     }
@@ -48,12 +48,14 @@ class PostController extends Controller
 
         $im = $request->file('picture');
 
-        $link = $request->file('picture')->store('/');
+        if (!empty($im)) {
+            $link = $request->file('picture')->store('/');
 
-        $post->picture()->create([
-          'link' => $link,
-          'title' => $request->title_image?? $request->title
-        ]);
+            $post->picture()->create([
+              'link' => $link,
+              'title' => $request->title_image?? $request->title
+            ]);
+        };
 
         return redirect()->route('post.index')->with('message', 'Votre nouveau post à bien été enregistré.');
     }
@@ -66,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::with('picture', 'category')->find($id);
 
         return view('back.post.show', ['post' => $post]);
     }
@@ -79,7 +81,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        $post = Post::with("picture", 'category')->find($id);
         $categories = Category::pluck('name', 'id')->all();
 
         return view('back.post.edit', ['post' => $post, 'categories' => $categories]);
@@ -95,7 +97,7 @@ class PostController extends Controller
     public function update(PostRequest $request, $id)
     {
         // Il faut repérer le post que l'on souhaite modifier
-        $post = Post::find($id);
+        $post = Post::with("picture", 'category')->find($id);
 
         $post->update($request->all()); //mettre à jour les données d'un  post_type
 
@@ -118,7 +120,7 @@ class PostController extends Controller
             ]);
         }
 
-        return redirect()->route('post.index')->with('message', 'Success');
+        return redirect()->route('post.index')->with('message', 'Votre nouveau post a bien été mis à jour.');
     }
 
     /**
@@ -134,5 +136,34 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('post.index')->with('message', 'Votre post a bien été supprimé.');
+    }
+
+    public function multiDestroy(Request $request)
+    {
+        $this->validate($request, [
+          // 'book_id' => 'integer|required',
+          'multi_delete.*' => "integer|required",
+      ]);
+
+        foreach ($request->multi_delete as $id) {
+            Post::find($id)->delete();
+        }
+
+        return redirect()->route('post.index')->with('message', 'Votre post a bien été supprimé.');
+    }
+
+    public function searchBack(Request $request)
+    {
+        $this->validate($request, [
+               'q' => "required",
+          ]);
+
+        $q = $request->q;
+
+        $posts = Post::research($q)
+                      ->paginate(5);
+
+        // return view('front.searchResult', ['posts' => $posts, 'q' => $query]);
+        return view('front.searchResult', compact('posts', 'q'));
     }
 }
