@@ -41,14 +41,21 @@
   		<label for="student_max">Nombre maxi d'élèves</label>
   		<input type="number" min='10' max='50' class="form-control" name="student_max" id='student_max' value="{{old('student_max')}}">
   	</div>
-  	<div class="form-group">
-  		<label for="date_start">Début de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_start' id='date_start' value='{{old('date_start')}}'>
+
+    <div class="form-group">
+  		<label for="date_only_from_date_start">Début de la formation</label>
+      <input type="date" id='date_only_from_date_start' class="form-control" name="date_only_from_date_start" value='{{old('date_only_from_date_start')}}'>
+      <input type="time" id='time_only_from_date_start' class="form-control" name="time_only_from_date_start" value='{{old('time_only_from_date_start')}}'>
+  		<input type="datetime-local" id='date_start' name='date_start' value='{{old('date_start')}}' style="display: none;">
   	</div>
+
   	<div class="form-group">
-  		<label for="date_end">Fin de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_end' id='date_end' value='{{old('date_end')}}'>
+  		<label for="date_only_from_date_end">Fin de la formation</label>
+      <input type="date" id='date_only_from_date_end' class="form-control" name="date_only_from_date_end" value='{{old('date_only_from_date_end')}}'>
+      <input type="time" id='time_only_from_date_end' class="form-control" name="time_only_from_date_end" value='{{old('time_only_from_date_end')}}'>
+  		<input type="datetime-local"  name='date_end' id='date_end' value='{{old('date_end')}}' style="display: none;">
   	</div>
+
   	<div class="form-group">
   		<label for='status'>Publier le post</label>
   		<div class="radio" id='status'>
@@ -62,7 +69,11 @@
   		<label for="picture">Ajouter un fichier</label>
   		<input type="file" name="picture" value="{{old('picture')}}" id="picture">
   	</div>
-  	<button type="submit" class="btn btn-primary btn-lg">Ajouter ce post</button>
+  	<button type="submit" id="submit" class="btn btn-primary btn-lg">Ajouter ce post</button>
   </div>
 </form>
+@endsection
+@section('scripts')
+    @parent
+    <script src="{{asset('js/dateForm.js')}}"></script>
 @endsection

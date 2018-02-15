@@ -13,6 +13,7 @@ let mix = require('laravel-mix');
 
  mix.js('resources/assets/js/app.js', 'public/js')
     .js('resources/assets/js/confirm.js', 'public/js')
+    .js('resources/assets/js/dateForm.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .browserSync({
         // pour faire fonctionner debug bar + npm run watch
@@ -26,7 +27,8 @@ let mix = require('laravel-mix');
           },
         files:[
           'app/**/*.php',
-          'public/assets/js/**/*.php',
-          'public/assets/css/**/*/css'
+          'resources/views/**/*.php',
+          'public/assets/js/**/*.js',
+          'public/assets/css/**/*.css'
         ]
     });

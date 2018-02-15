@@ -23,10 +23,10 @@ class FrontController extends Controller
 
     public function index()
     {
-        $prefix = request()->page?? 'home';
-        $path = 'book' . $prefix;
+        $prefix = request()->page?? '1';
+        $key = 'book' . $prefix;
 
-        $posts = Cache::remember($path, 60*24, function () {
+        $posts = Cache::remember($key, 60*24, function () {
             return Post::published()->with('picture', 'category')->orderBy('date_start', "asc")->take(2)->get();
         });
 
@@ -35,7 +35,11 @@ class FrontController extends Controller
 
     public function show(int $id)
     {
-        $post = Post::published()->with('picture', 'category')->find($id);
+      $key = 'bookshow' . $id;
+
+        $post = Cache::remember($key, 60*24, function () {
+          return Post::published()->with('picture', 'category')->find($id);
+          )};
 
         return view('front.show', ['post' => $post]);
     }

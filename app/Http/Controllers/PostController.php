@@ -7,6 +7,7 @@ use App\Post;
 use App\Category;
 use App\Http\Requests\PostRequest;
 use Storage;
+use Artisan;
 
 class PostController extends Controller
 {
@@ -57,6 +58,8 @@ class PostController extends Controller
             ]);
         };
 
+        Artisan::call("cache:clear");
+
         return redirect()->route('post.index')->with('message', 'Votre nouveau post à bien été enregistré.');
     }
 
@@ -94,12 +97,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        // Il faut repérer le post que l'on souhaite modifier
-        $post = Post::with("picture", 'category')->find($id);
 
-        $post->update($request->all()); //mettre à jour les données d'un  post_type
+        // Il faut repérer le post que l'on souhaite modifier
+
+        $updatedPost = $post->update($request->all()); //mettre à jour les données d'un post_type
 
         $image = $request->file('picture');
 
@@ -119,6 +122,8 @@ class PostController extends Controller
                 'title' => $request->title_image ?? $request->title
             ]);
         }
+
+        Artisan::call("cache:clear");
 
         return redirect()->route('post.index')->with('message', 'Votre nouveau post a bien été mis à jour.');
     }

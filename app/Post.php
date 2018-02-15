@@ -9,8 +9,22 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
     protected $fillable = [
-      'title', 'post_type', 'description', 'price', 'category_id', 'student_max',"date_start","date_end", 'status'
+      'title',
+      'post_type',
+      'description',
+      'price',
+      'category_id',
+      'student_max',
+      "date_start",
+      "date_end",
+      'status'
     ];
+
+    protected $appends = [
+      'date_only_from_date_start',
+      'time_only_from_date_start'
+    ];
+
 
     public function category()
     {
@@ -51,12 +65,14 @@ class Post extends Model
     public function getDateStartFrAttribute()
     {
         $date_start = Carbon::parse($this->date_start);
+
         return $date_start->format('d-m-Y');
     }
 
     public function getDateEndFrAttribute()
     {
         $date_End = Carbon::parse($this->date_End);
+
         return $date_End->format('d-m-Y');
     }
 
@@ -68,5 +84,25 @@ class Post extends Model
     public function getDateEndForInputAttribute()
     {
         return substr($this->date_end, 0, 10) . "T" . substr($this->date_end, 11, 5);
+    }
+
+    public function getDateOnlyFromDateStartAttribute()
+    { //On sort uniquement la date du format DateTime
+        return substr($this->date_start, 0, 10);
+    }
+
+    public function getTimeOnlyFromDateStartAttribute()
+    {//On sort uniquement l'heure du format DateTime
+        return substr($this->date_start, 11, 5);
+    }
+
+    public function getDateOnlyFromDateEndAttribute()
+    { //On sort uniquement la date du format DateTime
+        return substr($this->date_end, 0, 10);
+    }
+
+    public function getTimeOnlyFromDateEndAttribute()
+    {//On sort uniquement l'heure du format DateTime
+        return substr($this->date_end, 11, 5);
     }
 }

@@ -66,13 +66,19 @@
   		<input type="number" min='10' max='50' class="form-control" name="student_max" id='student_max' @if (!empty(old('student_max'))) value='{{old('student_max')}}' @else value='{{$post->student_max}}' @endif>
   	</div>
   	<div class="form-group">
-  		<label for="date_start">Début de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_start' id='date_start' @if (!empty(old('date_start'))) value='{{old('date_start')}}' @else value='{{$post->date_start_for_input}}' @endif>
+  		<label for="date_only_start">Début de la formation</label>
+      <input type="date" id='date_only_from_date_start' class="form-control" name="date_only_from_date_start" @if (!empty(old('date_only_from_date_start'))) value='{{old('date_only_from_date_start')}}' @else value='{{$post->date_only_from_date_start}}' @endif>
+      <input type="time" id='time_only_from_date_start' class="form-control" name="time_only_from_date_start" @if (!empty(old('time_only_from_date_start'))) value='{{old('time_only_from_date_start')}}' @else value='{{$post->time_only_from_date_start}}' @endif>
+  		<input type="datetime-local" id='date_start' name='date_start' @if (!empty(old('date_start'))) value='{{old('date_start')}}' @else value='{{$post->date_start_for_input}}' @endif style="display : none;">
   	</div>
+
   	<div class="form-group">
-  		<label for="date_end">Fin de la formation</label>
-  		<input type="datetime-local" class="form-control" name='date_end' id='date_end' @if (!empty(old('date_end'))) value='{{old('date_end')}}' @else value='{{$post->date_end_for_input}}' @endif>
+  		<label for="date_only_from_date_end">Fin de la formation</label>
+      <input type="date" id='date_only_from_date_end' class="form-control" name="date_only_from_date_end" @if (!empty(old('date_only_from_date_end'))) value='{{old('date_only_from_date_end')}}' @else value='{{$post->date_only_from_date_end}}' @endif>
+      <input type="time" id='time_only_from_date_end' class="form-control" name="time_only_from_date_end" @if (!empty(old('time_only_from_date_end'))) value='{{old('time_only_from_date_end')}}' @else value='{{$post->time_only_from_date_end}}' @endif>
+  		<input type="datetime-local"  name='date_end' id='date_end' @if (!empty(old('date_end'))) value='{{old('date_end')}}' @else value='{{$post->date_end_for_input}}' @endif style="display : none;">
   	</div>
+
   	<div class="form-group">
   		<label for='status'>Publier le post</label>
   		<div class="radio" id='status'>
@@ -92,7 +98,11 @@
     @endif
   		  <input type="file" name="picture" value="{{old('picture')}}" id="picture">
   	  </div>
-  	<button type="submit" class="btn btn-primary btn-lg">Ajouter ce post</button>
+  	<button type="submit" id="submit" class="btn btn-primary btn-lg">Ajouter ce post</button>
   </div>
 </form>
+@endsection
+@section('scripts')
+    @parent
+    <script src="{{asset('js/dateForm.js')}}"></script>
 @endsection
