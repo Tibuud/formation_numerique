@@ -1,58 +1,79 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+<p align="center">Création d'un site Web proposant des stages et des formations dasn le cadre de ma formation à l'école multimédia</p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Contexte technique
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Utilisation du framework Laravel avec MySQL
+Utilisation de Bootstrap pour le visuel
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+## Données
 
-## Learning Laravel
+Vous utiliserez une seule table « posts » pour les formations/stages dans laquelle
+vous utiliserez une colonne post_type dont les valeurs pourront-être :
+« formation » ou « stage » pour définir ces contenus.
+Les formations/stages auront un titre, une description, une date de début et de
+fin, un prix et un nombre maximal d’élèves par formation/stage.
+Une formation et un stage auront au plus une catégorie.
+On pourra associer une image au plus à un « post ».
+Un utilisateur, « administrateur », pourra effectuer les actions de CRUD sur la
+ressource « posts ». Cet utilisateur devra être authentifié pour accéder à
+l’administration des contenus. Vous utiliserez donc la table « users » pour définir
+ce dernier et mettre en en place le système d’authentification de Laravel.
+Vous devez faire un diagramme des tables MySQL avant de commencer les
+migrations.
+Vous utiliserez également les seeders pour mettre des données d’exemple dans
+les tables du projet.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+La page d’accueil affichera les dernières formations/stages proposés par le site
+Web. Seulement les deux prochains stages/formations seront affichés sur cette
+page.
+Deux menus seront placés sur les pages du site : un menu principal et un menu
+secondaire. Ils sont identiques.
+Un moteur de recherche sera également placé dans la colonne latérale.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+## Menu principal
 
-## Laravel Sponsors
+Les items sont respectivement : un lien vers la page d’accueil, un lien vers la
+catégorie présentant tous les stages, un lien vers la page des formations et enfin
+un lien vers la page de contact que nous détaillerons plus bas.
+Le menu secondaire sera identique au menu principal et placé dans le footer.
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+## Formations/stage
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+La page de formation et de stage seront identiques à la page d’accueil, pour la
+mise en page en HTML. Mais elles listerons respectivement l’ensemble de stages
+et l’ensemble des formations pour leur catégorie donnée. Ces pages listent les
+formations/stages avec respectivement le titre, une description et la date de
+début uniquement.
 
-## Contributing
+## Moteur de recherche
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+La page de recherche affichera les résultats à gauche avec de la pagination si les
+résultats sont plus de 5.
 
-## Security Vulnerabilities
+## Page de contact
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Pour la page de contact vous utiliserez mailDev un composant NodeJs, pour
+tester l’envoi d’email. Vous placerez les champs obligatoires: email et description
+dans ce dernier.
 
-## License
+## backoffice
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Pour l’administration vous mettrez un lien vers la page de login/password que
+vous n’afficherez pas sur le site. Il faudra tapez directement dans l’url du site
+/login pour accéder à la page d’authentification de Laravel.
+Une fois authentifié vous afficherez un lien dans le header du site pour vous
+déconnecter ou retourner à l’administration.
+
+## Facultatif
+
+Vous ajouterez la possibilité de supprimer de manière multiple des
+« stages/formations » et ajouterez un champ de recherche sur les
+stages/formations.
+
+Si vous avez le temps vous pouvez mettre en place la suppression avec un
+système de corbeille pour suppression définitive, à vous de proposer un affichage
+de cette page dans le backoffice.
+Dans la corbeille vous mettez la possibilité de supprimer de manière définitive les
+stages/formations

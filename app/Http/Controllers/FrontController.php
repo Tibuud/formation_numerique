@@ -11,16 +11,6 @@ use Cache;
 
 class FrontController extends Controller
 {
-    // public function __construct()
-    // {
-    //     //méthode pour injecter des données à une vue partielle
-    //     view()->composer('partials.menu', function ($view) {
-    //         $categories = Category::pluck('name')->all();
-    //         dump($categories);
-    //         $view->with('categories', $categories);// on passe les données à la view
-    //     });
-    // }
-
     public function index()
     {
         $prefix = request()->page?? '1';
@@ -35,11 +25,11 @@ class FrontController extends Controller
 
     public function show(int $id)
     {
-      $key = 'bookshow' . $id;
+        $key = 'bookshow' . $id;
 
         $post = Cache::remember($key, 60*24, function () {
-          return Post::published()->with('picture', 'category')->find($id);
-          )};
+            return Post::published()->with('picture', 'category')->find($id);
+        });
 
         return view('front.show', ['post' => $post]);
     }
