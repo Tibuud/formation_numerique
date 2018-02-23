@@ -27,7 +27,7 @@ class FrontController extends Controller
     {
         $key = 'bookshow' . $id;
 
-        $post = Cache::remember($key, 60*24, function () {
+        $post = Cache::remember($key, 60*24, function () use ($id) {
             return Post::published()->with('picture', 'category')->find($id);
         });
 
